@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+void main() {
+  runApp(const ResponsiveOrientationApp());
+}
+
+class ResponsiveOrientationApp extends StatelessWidget {
+  const ResponsiveOrientationApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Responsive Breakpoint Demo',
+      debugShowCheckedModeBanner: false,
+      home: ResponsiveLayout(),
+    );
+  }
+}
+
+class ResponsiveLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // 📏 Get screen width using MediaQuery
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    // 🧠 Define breakpoints
+    if (screenWidth < 600) {
+      return MobileView();
+    } else if (screenWidth >= 600 && screenWidth < 1024) {
+      return TabletView();
+    } else {
+      return DesktopView();
+    }
+  }
+}
+
+class MobileView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Mobile View'), backgroundColor: Colors.deepPurple),
+      body: Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.pink,
+              child: Center(child: Text("Top Content", style: TextStyle(color: Colors.white, fontSize: 20))),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.indigo,
+              child: Center(child: Text("Bottom Content", style: TextStyle(color: Colors.white, fontSize: 20))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TabletView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Tablet View'), backgroundColor: Colors.green),
+      body: Row(
+        children: [
+          Expanded(
+            child: Container(
+              color: Colors.teal,
+              child: Center(child: Text("Left Panel", style: TextStyle(color: Colors.white, fontSize: 22))),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.blueGrey,
+              child: Center(child: Text("Right Panel", style: TextStyle(color: Colors.white, fontSize: 22))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DesktopView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Text('Desktop View'), backgroundColor: Colors.orange),
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: Colors.blue[800],
+              child: Center(child: Text("Sidebar",
+                  style: TextStyle(color: Colors.white, fontSize: 24))),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: Colors.amber[800],
+              child: Center(child: Text("Main Content",
+                  style: TextStyle(color: Colors.black, fontSize: 24))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
