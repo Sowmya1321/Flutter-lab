@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+void main() {
+  runApp(const ResponsiveOrientationApp());
+}
+
+class ResponsiveOrientationApp extends StatelessWidget {
+  const ResponsiveOrientationApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: OrientationHomePage(),
+    );
+  }
+}
+
+class OrientationHomePage extends StatelessWidget {
+  const OrientationHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Responsive UI - Orientation'),
+        backgroundColor: Colors.teal,
+      ),
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          if (orientation == Orientation.portrait) {
+            return portraitLayout();
+          } else {
+            return landscapeLayout();
+          }
+        },
+      ),
+    );
+  }
+
+  Widget portraitLayout() {
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            color: Colors.deepPurple,
+            alignment: Alignment.center,
+            child: const Text(
+              'Portrait Mode',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            color: Colors.orange,
+            alignment: Alignment.center,
+            child: const Text(
+              'Bottom Panel',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget landscapeLayout() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            color: Colors.deepPurple,
+            alignment: Alignment.center,
+            child: const Text(
+              'Landscape Mode',
+              style: TextStyle(color: Colors.white, fontSize: 26),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            color: Colors.orange,
+            alignment: Alignment.center,
+            child: const Text(
+              'Right Panel',
+              style: TextStyle(color: Colors.white, fontSize: 26),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
