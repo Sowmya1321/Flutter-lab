@@ -19,8 +19,6 @@ class MyAnimatedWidget extends StatefulWidget {
   _MyAnimatedWidgetState createState() => _MyAnimatedWidgetState(); 
 } 
  
-nn 
- 
 class _MyAnimatedWidgetState extends State<MyAnimatedWidget> 
     with SingleTickerProviderStateMixin { 
   late AnimationController _animationController; 
@@ -52,7 +50,6 @@ class _MyAnimatedWidgetState extends State<MyAnimatedWidget>
       body: Center( 
         child: FadeTransition( 
  
-nn 
           opacity: _opacityAnimation, 
           child: Container( 
             width: 200, 
