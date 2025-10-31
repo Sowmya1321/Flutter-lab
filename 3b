@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart'; 
+ 
+void main() { 
+  // Runs the app
+  runApp(MyPortraitApp()); 
+} 
+ 
+class MyPortraitApp extends StatelessWidget { 
+  @override 
+  Widget build(BuildContext context) { 
+    return MaterialApp( 
+      title: 'Portrait Design App', 
+      home: HomeScreenForcedSmall(), 
+      debugShowCheckedModeBanner: false, 
+    ); 
+  }
+} 
+ 
+class HomeScreenForcedSmall extends StatefulWidget { 
+  @override 
+  _HomeScreenForcedSmallState createState() => _HomeScreenForcedSmallState(); 
+} 
+ 
+class _HomeScreenForcedSmallState extends State<HomeScreenForcedSmall> { 
+  String selectedPage = 'Home'; 
+ 
+  final Map<String, Widget> pageContents = { 
+    'Home': Center(child: Text('Welcome to the Home Page!', style: TextStyle(fontSize: 24))), 
+    'About': Center(child: Text('This is the About Page.', style: TextStyle(fontSize: 24))), 
+    'Services': Center(child: Text('Here are our Services.', style: TextStyle(fontSize: 24))), 
+    'Contact': Center(child: Text('Contact us at example@flutter.dev', style: 
+TextStyle(fontSize: 24))), 
+    'Feedback': Center(child: Text('Give us your Feedback!', style: TextStyle(fontSize: 24))), 
+  }; 
+ 
+  void onMenuSelect(String page) { 
+    setState(() { 
+      selectedPage = page; 
+    }); 
+  } 
+ 
+  // buildMenuButton is not strictly needed here but kept for completeness
+  Widget buildMenuButton(String title) { 
+    return TextButton( 
+      onPressed: () => onMenuSelect(title), 
+      child: Text( 
+        title.toUpperCase(), 
+        style: TextStyle( 
+          fontWeight: selectedPage == title ? FontWeight.bold : FontWeight.normal, 
+          color: selectedPage == title ? Colors.white : Colors.white70, 
+        ), 
+      ), 
+    ); 
+  } 
+ 
+  @override 
+  Widget build(BuildContext context) { 
+    // final screenWidth = MediaQuery.of(context).size.width; 
+    
+    // *** MODIFICATION: HARDCODED TO SMALL SCREEN (true) ***
+    final isSmallScreen = true; 
+ 
+    return Scaffold( 
+      appBar: AppBar( 
+        backgroundColor: Colors.green[800], 
+        title: Text('Design', style: TextStyle(fontWeight: FontWeight.bold, 
+                                                fontSize: 35, 
+                                                color: Colors.white)), 
+        // Small Screen: Hamburger Menu (Code for 'true' branch of original ternary)
+        actions: [ 
+          PopupMenuButton<String>( 
+            icon: Icon(Icons.menu, color: Colors.white), 
+            onSelected: onMenuSelect, 
+            itemBuilder: (BuildContext context) { 
+              return ['Home', 'About', 'Services', 'Contact', 'Feedback'] 
+                  .map((String choice) => PopupMenuItem<String>( 
+                value: choice, 
+                child: Center( 
+                  child: Text( 
+                    choice.toUpperCase(), 
+                    style: TextStyle( 
+                      fontWeight: selectedPage == choice ? FontWeight.bold : FontWeight.normal, 
+                      color: selectedPage == choice ? Colors.green[900] : Colors.red[800], 
+                      fontSize: 15 
+                    ), 
+                  ), 
+                ), 
+              )) 
+                  .toList(); 
+            }, 
+          ), 
+        ], 
+      ), 
+      body: Container( 
+        decoration: BoxDecoration( 
+          image: DecorationImage( 
+            image: AssetImage("assets/images/bg.jpg"), // Requires 'assets/images/bg.jpg'
+            fit: BoxFit.cover, 
+          ), 
+        ), 
+        child: Center( 
+          child: Container( 
+            padding: EdgeInsets.all(20), 
+            // Small Screen: Full width 
+            width: double.infinity, 
+            child: pageContents[selectedPage], 
+          ), 
+        ), 
+      ), 
+    ); 
+  } 
+}
